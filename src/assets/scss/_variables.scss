@@ -1,0 +1,54 @@
+// Global CSS Variables for theming
+
+:root {
+  // Colors
+  --primary-color: #1867C0;
+  --secondary-color: #5CBBF6;
+  --accent-color: #4CAF50;
+  --error-color: #FF5252;
+  --info-color: #2196F3;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  
+  // Background
+  --background-color: #FFFFFF;
+  --surface-color: #F5F5F5;
+  
+  // Text
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  
+  // Sidebar
+  --sidebar-width-collapsed: 56px;
+  --sidebar-width-expanded: 240px;
+  --sidebar-background: var(--surface-color);
+  --sidebar-text: var(--text-primary);
+  --sidebar-active: var(--primary-color);
+  
+  // Transitions
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  // Colors
+  --primary-color: #2196F3;
+  --secondary-color: #424242;
+  --accent-color: #4CAF50;
+  --error-color: #FF5252;
+  --info-color: #2196F3;
+  --success-color: #4CAF50;
+  --warning-color: #FFC107;
+  
+  // Background
+  --background-color: #121212;
+  --surface-color: #212121;
+  
+  // Text
+  --text-primary: #FFFFFF;
+  --text-secondary: #BDBDBD;
+  
+  // Sidebar
+  --sidebar-background: #1E1E1E;
+  --sidebar-text: #FFFFFF;
+  --sidebar-active: var(--primary-color);
+}

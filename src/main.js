@@ -1,27 +1,13 @@
+// Main application entry point
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import App from './App.vue'
-import router from './router'
-import './assets/tailwind.css'
+import { registerPlugins } from './plugins'
 
-// Supabase
-import { createClient } from '@supabase/supabase-js'
-
-// Erstelle Supabase Client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-supabase-url.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key'
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
-// Initialisiere App
+// Create Vue app
 const app = createApp(App)
-const pinia = createPinia()
 
-// Erlaube Zugriff auf Supabase in allen Komponenten
-app.config.globalProperties.$supabase = supabase
+// Register plugins (Vuetify, Pinia, Router)
+registerPlugins(app)
 
-// Plugins registrieren
-app.use(pinia)
-app.use(router)
-
-// App mounten
+// Mount the app
 app.mount('#app')

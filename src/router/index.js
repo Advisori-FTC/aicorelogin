@@ -1,67 +1,105 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { supabase } from '@/main'
+import { useAuthStore } from '../stores/auth'
 
 // Lazy-loaded route components
-const Login = () => import('@/views/Login.vue')
-const Register = () => import('@/views/Register.vue')
-const ResetPassword = () => import('@/views/ResetPassword.vue')
-const Home = () => import('@/views/Home.vue')
+const LoginPage = () => import('../views/LoginPage.vue')
+const AppLayout = () => import('../layouts/AppLayout.vue')
+const Dashboard = () => import('../views/dashboard/DashboardView.vue')
+const DashboardOverview = () => import('../views/dashboard/Overview.vue')
+const DashboardAnalytics = () => import('../views/dashboard/Analytics.vue')
+const Users = () => import('../views/users/UsersView.vue')
+const UsersList = () => import('../views/users/UsersList.vue')
+const UserProfile = () => import('../views/users/UserProfile.vue')
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home,
-    meta: { requiresAuth: true }
+    redirect: '/login'
   },
   {
     path: '/login',
-    name: 'login',
-    component: Login,
+    name: 'Login',
+    component: LoginPage,
     meta: { requiresAuth: false }
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register,
-    meta: { requiresAuth: false }
+    path: '/app',
+    component: AppLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        redirect: '/app/dashboard'
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: Dashboard,
+        children: [
+          {
+            path: '',
+            redirect: '/app/dashboard/overview'
+          },
+          {
+            path: 'overview',
+            name: 'DashboardOverview',
+            component: DashboardOverview
+          },
+          {
+            path: 'analytics',
+            name: 'DashboardAnalytics',
+            component: DashboardAnalytics
+          }
+        ]
+      },
+      {
+        path: 'users',
+        name: 'Users',
+        component: Users,
+        children: [
+          {
+            path: '',
+            redirect: '/app/users/list'
+          },
+          {
+            path: 'list',
+            name: 'UsersList',
+            component: UsersList
+          },
+          {
+            path: 'profile',
+            name: 'UserProfile',
+            component: UserProfile
+          }
+        ]
+      }
+    ]
   },
-  {
-    path: '/reset-password',
-    name: 'reset-password',
-    component: ResetPassword,
-    meta: { requiresAuth: false }
-  },
-  // Fallback Route
+  // Fallback route
   {
     path: '/:pathMatch(.*)*',
-    redirect: { name: 'home' }
+    redirect: '/'
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 
-// Navigationswache
-router.beforeEach(async (to, from, next) => {
-  // Prüfe, ob die Route eine Authentifizierung erfordert
+// Navigation guards for authentication
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   
-  // Hole die aktuelle Supabase-Session
-  const { data } = await supabase.auth.getSession()
-  const isAuthenticated = !!data.session
-  
-  // Benutzer nicht authentifiziert, aber Route erfordert Authentifizierung
-  if (requiresAuth && !isAuthenticated) {
-    next({ name: 'login', query: { redirect: to.fullPath } })
+  // If route requires authentication and user is not authenticated, redirect to login
+  if (requiresAuth && !authStore.isAuthenticated) {
+    next('/login')
   } 
-  // Benutzer authentifiziert und versucht auf Login/Register zuzugreifen
-  else if (isAuthenticated && (to.name === 'login' || to.name === 'register')) {
-    next({ name: 'home' })
-  } 
-  // Sonst normale Navigation
+  // If user is authenticated and trying to access login, redirect to dashboard
+  else if (authStore.isAuthenticated && to.path === '/login') {
+    next('/app/dashboard')
+  }
   else {
     next()
   }

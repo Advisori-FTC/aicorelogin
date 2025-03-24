@@ -1,0 +1,33 @@
+# Project-Specific Rules and Patterns
+
+## Projektstruktur
+- Vue 3 mit Vuetify als UI-Framework
+- Pinia für State Management
+- Vue Router für Routing
+- SCSS mit CSS-Variablen für Theming
+
+## Verzeichniskonventionen
+- `/src/components/` - Wiederverwendbare Vue-Komponenten
+- `/src/layouts/` - Layout-Komponenten (z.B. AppLayout)
+- `/src/router/` - Router-Konfiguration
+- `/src/stores/` - Pinia Stores
+- `/src/views/` - Seitenkomponenten
+- `/src/assets/scss/` - SCSS-Dateien für Theming
+- `/src/plugins/` - Plugin-Konfigurationen (Vuetify etc.)
+
+## Coding-Standards
+- Vue 3 Composition API bevorzugen
+- Vuetify-Komponenten für UI-Elemente verwenden
+- CSS-Variablen für Theme-Konsistenz verwenden
+- Pinia für globalen State
+- Verschachtelte Routen für Hierarchie
+
+## Namenskonventionen
+- Komponenten: PascalCase (z.B. SidebarMenu.vue)
+- Stores: camelCase (z.B. authStore.js)
+- CSS-Klassen: kebab-case (z.B. sidebar-menu)
+- Funktionen: camelCase (z.B. toggleTheme())
+
+## Theme-System
+- Hell/Dunkel-Modus über Vuetify-Theme und CSS-Variablen
+- Theme-Einstellungen in einem zentralen Store

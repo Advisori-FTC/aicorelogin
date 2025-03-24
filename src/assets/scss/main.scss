@@ -1,0 +1,90 @@
+// Import variables - using @use instead of @import to address deprecation warning
+@use './_variables' as vars;
+
+// Global styles
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  margin: 0;
+  transition: background-color var(--transition-speed) ease;
+}
+
+// App container
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+// Content area
+.content-container {
+  flex: 1;
+  padding: 16px;
+  transition: padding-left var(--transition-speed) ease;
+}
+
+// Login page
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+  padding: 24px;
+}
+
+// Dashboard
+.dashboard-container {
+  padding: 16px;
+}
+
+// Sub-navigation
+.sub-navigation {
+  margin-bottom: 16px;
+  border-radius: 4px;
+  background-color: var(--surface-color);
+}
+
+// Links
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Transitions
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// Utilities
+.text-center {
+  text-align: center;
+}
+
+.my-4 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.mt-4 {
+  margin-top: 16px;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
