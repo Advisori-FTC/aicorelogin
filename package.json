@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build_prod":"vite build --base=/application",
+    "build_staging":"vite build --base=/stage",
+    "build_dev":"vite build --base=/dev",
     "preview": "vite preview"
   },
   "dependencies": {
